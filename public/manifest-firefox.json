@@ -20,7 +20,6 @@
   "incognito": "spanning",
   "background": {
     "scripts": [
-      "vendor/babel-polyfill.js",
       "dist/background.js"
     ],
     "persistent": true
