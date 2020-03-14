@@ -7,7 +7,7 @@
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "npx babel --watch src --out-dir dist",
-    "build": "babel lib --out-dir dist"
+    "build": "cp -r public/* dist/ && parcel build public/* && parcel build src/* && (mkdir -p build/chrome || true) && (mkdir -p build/firefox || true) && cp -rv dist/* build/chrome/ && cp -rv dist/* build/firefox/ && patch build/firefox/manifest.json manifest-firefox.patch"
   },
   "repository": {
     "type": "git",
