@@ -10,3 +10,4 @@ build/
 source/
 outlib/
 dist/
+.cache/
