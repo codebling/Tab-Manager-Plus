@@ -20,7 +20,7 @@
   "incognito": "spanning",
   "background": {
     "scripts": [
-      "dist/background.js"
+      "./background.js"
     ],
     "persistent": true
   },
