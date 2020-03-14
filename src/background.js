@@ -56,9 +56,7 @@ async function updateTabCount() {
         if (!found) toRemove.push(i);
       }
     }
-    // console.log("to remove", toRemove);
     for (let i = toRemove.length - 1; i >= 0; i--) {
-      // console.log("removing", toRemove[i]);
       if (!!window.tabsActive && window.tabsActive.length > 0) {
         if (window.tabsActive[toRemove[i]]) window.tabsActive.splice(toRemove[i], 1);
       }
@@ -326,7 +324,6 @@ function localStorageAvailable() {
 function windowFocus(windowId) {
   if (windowId) {
     windowActive(windowId);
-    // console.log("onFocused", windowId);
     hideWindows(windowId);
   }
 }
@@ -435,19 +432,6 @@ function windowActive(windowId) {
   windows.unshift(windowId);
   localStorage["windowAge"] = JSON.stringify(windows);
 
-  // browser.windows.getLastFocused({ populate: true }, function (w) {
-  // 	for (let i = 0; i < w.tabs.length; i++) {
-  // 		let tab = w.tabs[i];
-  // 		if (tab.active == true) {
-  // 			// console.log("get last focused", tab.id);
-  // 			// tabActiveChanged({
-  // 			// 	tabId: tab.id,
-  // 			// 	windowId: tab.windowId
-  // 			// });
-  // 		}
-  // 	};
-  // });
-  // console.log(windows);
 }
 
 browser.commands.onCommand.addListener(function (command) {

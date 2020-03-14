@@ -3,7 +3,6 @@ let browser = browser || chrome;
 class TabManager extends React.Component {
   constructor(props) {
     super(props);
-    //this.update();
 
     if (navigator.userAgent.search("Firefox") > -1) {
     } else {
@@ -74,9 +73,6 @@ class TabManager extends React.Component {
       document.body.className = "";
     }
 
-    // let closeTimeout = setTimeout(function () {
-    //  window.close();
-    // }, 100000);
     let closeTimeout;
     let resetTimeout;
 
@@ -169,10 +165,6 @@ class TabManager extends React.Component {
   hoverHandler(tab) {
     this.setState({ topText: tab.title });
     this.setState({ bottomText: tab.url });
-    // clearTimeout(this.state.closeTimeout);
-    // this.state.closeTimeout = setTimeout(function () {
-    //  window.close();
-    // }, 100000);
     clearTimeout(this.state.resetTimeout);
     this.state.resetTimeout = setTimeout(
       function () {
@@ -181,7 +173,6 @@ class TabManager extends React.Component {
       }.bind(this),
       15000
     );
-    //this.update();
   }
   hoverIcon(e) {
     let text = e.target.title || " ";
@@ -193,7 +184,6 @@ class TabManager extends React.Component {
     }
     this.setState({ topText: text });
     this.setState({ bottomText: bottom });
-    //this.update();
   }
   render() {
     let _this = this;
@@ -523,13 +513,9 @@ class TabManager extends React.Component {
         }
       }
     }, 1000);
-
-    // box.select();
-    // box.focus();
   }
   async sessionSync() {
     let values = await browser.storage.local.get(null);
-    // console.log(values);
     let sessions = [];
     for (let key in values) {
       let sess = values[key];
@@ -609,8 +595,6 @@ class TabManager extends React.Component {
     this.setState({
       tabCount: tabCount
     });
-    //this.state.searchLen = 0;
-    // this.forceUpdate();
   }
   async deleteTabs() {
     let _this2 = this;
@@ -883,24 +867,19 @@ class TabManager extends React.Component {
             let last = false;
             if (selectedTabs.length == 1) {
               selectedTab = selectedTabs[0];
-              // console.log("one tab", selectedTab);
             } else if (selectedTabs.length > 1) {
               if (this.state.lastSelect) {
                 selectedTab = this.state.lastSelect;
-                // console.log("more tabs, last", selectedTab);
               } else {
                 selectedTab = selectedTabs[0];
-                // console.log("more tabs, first", selectedTab);
               }
             } else if (selectedTabs.length == 0 && this.state.lastSelect) {
               selectedTab = this.state.lastSelect;
-              // console.log("no tabs, last", selectedTab);
             }
             if (this.state.lastDirection) {
               if (goRight && this.state.lastDirection == "goRight") {
               } else if (goLeft && this.state.lastDirection == "goLeft") {
               } else if (selectedTabs.length > 1) {
-                // console.log("turned back, last", this.state.lastSelect, selectedTab);
                 this.select(this.state.lastSelect);
                 this.state.lastDirection = false;
                 found = true;
@@ -924,7 +903,6 @@ class TabManager extends React.Component {
                     found = true;
                     break;
                   } else if (selectedTab == _t.id) {
-                    // console.log("select next one", selectedNext);
                     if (goRight) {
                       selectedNext = true;
                     } else if (prev) {
@@ -940,7 +918,6 @@ class TabManager extends React.Component {
                     break;
                   }
                   prev = _t.id;
-                  // console.log(_t, _t.id == selectedTab);
                 }
               }
             }
@@ -971,7 +948,6 @@ class TabManager extends React.Component {
                     break;
                   }
                   prev = _t.id;
-                  // console.log(_t, _t.id == selectedTab);
                 }
               }
             }
@@ -1001,7 +977,6 @@ class TabManager extends React.Component {
             let i = -1;
             if (selectedTabs.length == 1) {
               selectedTab = selectedTabs[0];
-              // console.log(selectedTab);
             }
             for (let _w of this.state.windows) {
               i = 0;
@@ -1017,25 +992,19 @@ class TabManager extends React.Component {
                     break;
                   } else if (selectedTab == _t.id) {
                     tabPosition = i;
-                    // console.log("found tab", _w.id, _t.id, selectedTab, i);
                     if (goDown) {
-                      // console.log("select next window ", selectedNext, tabPosition);
                       selectedNext = true;
                       break;
                     } else if (prev) {
-                      // console.log("select prev window ", prev, tabPosition);
                       this.selectWindowTab(prev, tabPosition);
                       found = true;
                       break;
                     }
                   } else if (selectedNext) {
-                    // console.log("selecting next window ", _w.id, tabPosition);
                     this.selectWindowTab(_w.id, tabPosition);
                     found = true;
                     break;
                   }
-
-                  // console.log(_t, _t.id == selectedTab);
                 }
                 prev = _w.id;
               }
@@ -1054,38 +1023,29 @@ class TabManager extends React.Component {
                     break;
                   } else if (selectedTab == _t.id) {
                     tabPosition = i;
-                    // console.log("found tab", _w.id, _t.id, selectedTab, i);
                     if (goDown) {
-                      // console.log("select next window ", selectedNext, tabPosition);
                       selectedNext = true;
                       break;
                     } else if (prev) {
-                      // console.log("select prev window ", prev, tabPosition);
                       this.selectWindowTab(prev, tabPosition);
                       found = true;
                       break;
                     }
                   } else if (selectedNext) {
-                    // console.log("selecting next window ", _w.id, tabPosition);
                     this.selectWindowTab(_w.id, tabPosition);
                     found = true;
                     break;
                   }
-                  // console.log(_t, _t.id == selectedTab);
                 }
                 prev = _w.id;
               }
             }
-            // console.log(found, goDown, first);
             if (!found && goDown && first) {
-              // console.log("go first", first);
               this.state.selection = {};
               this.selectWindowTab(first, tabPosition);
               found = true;
             }
-            // console.log(found, goUp, last);
             if (!found && goUp && last) {
-              // console.log("go last", last);
               this.state.selection = {};
               this.selectWindowTab(last, tabPosition);
               found = true;
@@ -1537,7 +1497,6 @@ class TabManager extends React.Component {
       let reader = new FileReader();
       const self = this;
       reader.onload = async event => {
-        //console.log('FILE CONTENT', event.target.result);
         let backupFile;
         try {
           backupFile = JSON.parse(event.target.result);
@@ -1553,13 +1512,11 @@ class TabManager extends React.Component {
             if (newSession.windowsInfo && newSession.tabs && newSession.id) {
               let obj = {};
               obj[newSession.id] = newSession;
-              //this.state.sessions.push(obj);
               let value = await browser.storage.local.set(obj).catch(function (err) {
                 console.log(err);
                 console.error(err.message);
                 success--;
               });
-              //console.log(value);
             }
           }
           this.setState({ bottomText: success + " windows successfully restored!" });

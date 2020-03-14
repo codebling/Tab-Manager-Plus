@@ -156,10 +156,6 @@ body.dark .icon {
   background-blend-mode: difference;
 }
 
-/*body.dark .icon {
-    background-blend-mode: color-dodge;
-}*/
-
 body.dark .icon.selected {
   background-blend-mode: unset;
 }

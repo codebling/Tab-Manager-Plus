@@ -171,26 +171,8 @@ class Tab extends React.Component {
   }
   async resolveFavIconUrl() {
     let image;
-    // firefox screenshots; needs <all_urls>
-    // if(!!browser.tabs.captureTab) {
-    // 	console.log("tabs captureTab");
-    // 	image = await browser.tabs.captureTab(this.props.tab.id);
-    // 	image = "url(" + image + ")";
-    // }else
     if (this.props.tab.url.indexOf("chrome://") !== 0 && this.props.tab.url.indexOf("about:") !== 0) {
-      // chrome screenshots / only for active tabs; needs <all_urls>
-      // if(!!browser.tabs.captureVisibleTab && this.props.tab.highlighted) {
-      // 	console.log("tabsCapture");
-      // 	try {
-      // 		image = await browser.tabs.captureVisibleTab( this.props.window.id, {} );
-      // 		//console.log(image);
-      // 	} catch ( e ) {
-      // 		console.log(e.message);
-      // 	}
-      // 	image = "url(" + image + ")";
-      // }else{
       image = this.props.tab.favIconUrl ? "url(" + this.props.tab.favIconUrl + ")" : "";
-      //}
     } else {
       let favIcons = ["bookmarks", "chrome", "crashes", "downloads", "extensions", "flags", "history", "settings"];
       let iconName = this.props.tab.url.slice(9).match(/^\w+/g);

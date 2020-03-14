@@ -416,7 +416,6 @@ class TabOptions extends React.Component {
     children.push(this.logo());
     children.push(this.optionsSection());
     children.push(<div className="clearfix" />);
-    //children.push(React.createElement('h4', {}, this.props.getTip()));
     children.push(this.licenses());
 
     return (

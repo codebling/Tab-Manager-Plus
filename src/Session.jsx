@@ -1,8 +1,6 @@
 class Session extends React.Component {
   constructor(props) {
     super(props);
-    //console.log(this.props.window);
-    //console.log(this.props.window.name);
     let name = this.props.window.name;
     this.state = {
       windowTitles: [],
@@ -121,7 +119,6 @@ class Session extends React.Component {
     }
   }
   shouldComponentUpdate(nextProps, nextState) {
-    //console.log("should update?", nextProps, nextState);
     return true;
   }
   stop(e) {
@@ -131,9 +128,6 @@ class Session extends React.Component {
     let _this2 = this;
     e.stopPropagation();
     console.log("source window", this.props.window);
-    // chrome.runtime.getBackgroundPage(function callback(tabs, backgroundPage) {
-    // 	backgroundPage.createWindowWithTabs(tabs);
-    // }.bind(null, this.props.window.tabs));
 
     let customName = false;
     if (this.props.window && this.props.window.name && this.props.window.customName) {
@@ -220,32 +214,15 @@ class Session extends React.Component {
         this.props.scrollTo("window", newWindow.id);
       }.bind(this), 250);
     }
-
-    // , function (tabs, w) {
-    // 	browser.tabs.create(first.id, { pinned: first.pinned });
-    // 	if (t.length > 0) {
-    // 		browser.tabs.move(t, { windowId: w.id, index: -1 }, function (tab) {
-    // 			browser.tabs.update(tab.id, { pinned: tab.pinned });
-    // 		});
-    // 	}
-    // 	browser.windows.update(w.id, { focused: true });
-    // }.bind(null, this.props.window.tabs));
-    // browser.windows.update(this.props.window.windowsInfo.id, {
-    // 	"focused": true },
-    // function (a) {this.props.parentUpdate();}.bind(this));
   }
   async close(e) {
     e.stopPropagation();
     let value = await browser.storage.local.remove(this.props.window.id);
     console.log(value);
     this.props.parentUpdate();
-    // browser.windows.remove(this.props.window.windowsInfo.id);
   }
   maximize(e) {
     e.stopPropagation();
-    // browser.windows.update(this.props.window.windowsInfo.id, {
-    // 	"state": "normal" },
-    // function (a) {this.props.parentUpdate();}.bind(this));
   }
 }
 

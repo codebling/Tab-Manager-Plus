@@ -497,7 +497,6 @@ class Window extends React.Component {
     }
 
     let queryInfo = {};
-    //queryInfo.currentWindow = true;
     queryInfo.windowId = this.props.window.id;
     console.log(queryInfo);
 
@@ -568,7 +567,6 @@ class Window extends React.Component {
     });
   }
   changeName(e) {
-    // this.setState(a);
     let names = localStorage["windowNames"];
     if (!!names) {
       names = JSON.parse(names);

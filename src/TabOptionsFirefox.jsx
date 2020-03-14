@@ -346,11 +346,9 @@ class TabOptions extends React.Component {
   }
   openIncognitoOptions() {
     browser.runtime.openOptionsPage();
-    // browser.tabs.create({ url: 'about:addons' });
   }
   openShortcuts() {
     browser.runtime.openOptionsPage();
-    //browser.tabs.create({ url: 'about:addons' });
   }
   licenses() {
     let licenses = [];
@@ -397,7 +395,6 @@ class TabOptions extends React.Component {
     children.push(this.logo());
     children.push(this.optionsSection());
     children.push(<div className="clearfix" />);
-    //children.push(React.createElement('h4', {}, this.props.getTip()));
     children.push(this.licenses());
 
     return (

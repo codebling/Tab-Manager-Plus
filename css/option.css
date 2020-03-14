@@ -3,15 +3,6 @@
   overflow-y: auto;
 }
 
-/*.options-window {
-  margin-top: 3rem;
-}*/
-
-.toggle-options, .logo-options {
-  /*  width: 50%;
-  float: left;*/
-}
-
 .logo-box {
   margin-bottom: 1.5rem;
 }
@@ -19,7 +10,6 @@
 .toggle-box {
   width: 100%;
   clear: both;
-  /*float: left;*/
 }
 
 .clearfix {
@@ -46,7 +36,6 @@
 }
 
 .textlabel {
-  /*float:left;*/
   display: block;
   cursor: pointer;
   text-align: left;
@@ -60,7 +49,6 @@
   display: inline-block;
   width: 80px;
   line-height: 40px;
-  /*font-size: 1rem;*/
   background-color: #e1e1e1;
   border-radius: 50px;
   transition: all 0s ease-in-out;
@@ -218,5 +206,4 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .option-description {
   clear: both;
   padding-bottom: 20px;
-  /*font-size: 14px;*/
 }
