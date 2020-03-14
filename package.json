@@ -37,6 +37,8 @@
     "parcel": "^1.12.4"
   },
   "dependencies": {
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
   }
 }

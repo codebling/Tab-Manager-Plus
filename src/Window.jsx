@@ -1,3 +1,5 @@
+const React = require('react');
+
 class Window extends React.Component {
   constructor(props) {
     super(props);

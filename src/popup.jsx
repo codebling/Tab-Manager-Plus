@@ -1,3 +1,6 @@
+const React = require('react');
+const ReactDOM = require('react-dom');
+
 window.loaded = false;
 if (window.location.search.indexOf("?popup") > -1) {
   window.inPopup = true;
