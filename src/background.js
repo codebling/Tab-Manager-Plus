@@ -1,7 +1,3 @@
-
-
-let browser = browser || chrome;
-
 async function createWindowWithTabs(tabs, isIncognito) {
   let first = tabs.shift();
   let t = [];
