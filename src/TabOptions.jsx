@@ -426,3 +426,5 @@ class TabOptions extends React.Component {
     );
   }
 }
+
+module.exports = TabOptions;

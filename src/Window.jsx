@@ -609,3 +609,5 @@ class Window extends React.Component {
     return sorted;
   }
 }
+
+module.exports = Window;

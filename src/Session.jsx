@@ -248,3 +248,5 @@ class Session extends React.Component {
     // function (a) {this.props.parentUpdate();}.bind(this));
   }
 }
+
+module.exports = Session;
