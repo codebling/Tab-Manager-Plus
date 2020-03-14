@@ -1,0 +1,13 @@
+2c2
+<   "name": "Tab Manager Plus for Chrome",
+---
+>   "name": "Tab Manager Plus for Firefox",
+6,7c6
+<   "offline_enabled": true,
+<   "description": "Quickly find open tabs, see all windows in one view, find duplicates and limit tabs per window. The best Tab Manager for Chrome.",
+---
+>   "description": "Quickly find open tabs, see all windows in one view, find duplicates and limit tabs per window. The best Tab Manager for Firefox.",
+20,22d18
+<   ],
+<   "optional_permissions": [
+<     "system.display"
