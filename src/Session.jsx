@@ -1,5 +1,3 @@
-"use strict";
-
 class Session extends React.Component {
   constructor(props) {
     super(props);

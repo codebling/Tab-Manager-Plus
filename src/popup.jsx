@@ -1,4 +1,3 @@
-"use strict";
 window.loaded = false;
 if (window.location.search.indexOf("?popup") > -1) {
   window.inPopup = true;

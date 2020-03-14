@@ -1,5 +1,3 @@
-"use strict";
-
 class TabOptions extends React.Component {
   constructor(props) {
     super(props);

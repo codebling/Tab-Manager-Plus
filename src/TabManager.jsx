@@ -1,5 +1,3 @@
-"use strict";
-
 let browser = browser || chrome;
 
 class TabManager extends React.Component {
