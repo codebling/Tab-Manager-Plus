@@ -514,10 +514,7 @@ class Window extends React.Component {
     let obj = {};
     obj[session.id] = session;
 
-    let value = await browser.storage.local.set(obj).catch(function (err) {
-      console.log(err);
-      console.error(err.message);
-    });
+    let value = await browser.storage.local.set(obj);
     this.props.parentUpdate();
 
     setTimeout(function () {

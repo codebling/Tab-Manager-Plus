@@ -623,10 +623,7 @@ class TabManager extends React.Component {
     if (tabs.length) {
       for (let i = 0; i < tabs.length; i++) {
         if (!this.state.tabsbyid[tabs[i]].discarded) {
-          browser.tabs.discard(tabs[i]).catch(function (e) {
-            console.error(e);
-            console.log(e.message);
-          });
+          browser.tabs.discard(tabs[i]);
         }
       }
     }

@@ -156,11 +156,7 @@ class Session extends React.Component {
         return obj;
       }, {});
 
-    let newWindow = await browser.windows.create(filteredWindow).catch(function (error) {
-      console.error(error);
-      console.log(error);
-      console.log(error.message);
-    });
+    let newWindow = await browser.windows.create(filteredWindow);
 
     let emptyTab = newWindow.tabs[0].id;
 
@@ -179,18 +175,10 @@ class Session extends React.Component {
         }
       }
       newTab.windowId = newWindow.id;
-      let tabCreated = await browser.tabs.create(newTab).catch(function (error) {
-        console.error(error);
-        console.log(error);
-        console.log(error.message);
-      });
+      let tabCreated = await browser.tabs.create(newTab);
     }
 
-    await browser.tabs.remove(emptyTab).catch(function (error) {
-      console.error(error);
-      console.log(error);
-      console.log(error.message);
-    });
+    await browser.tabs.remove(emptyTab);
 
     if (customName) {
       let names = localStorage["windowNames"];
