@@ -78,10 +78,11 @@ window.tabsActive = [];
 
 async function tabAdded(tab) {
   if (typeof localStorage["tabLimit"] === "undefined") localStorage["tabLimit"] = "0";
+  let tabLimit;
   try {
-    let tabLimit = JSON.parse(localStorage["tabLimit"]);
+    tabLimit = JSON.parse(localStorage["tabLimit"]);
   } catch (e) {
-    let tabLimit = 0;
+    tabLimit = 0;
   }
   if (tabLimit > 0) {
     if (tab.index >= tabLimit) {
@@ -323,35 +324,21 @@ function localStorageAvailable() {
 }
 
 function windowFocus(windowId) {
-  try {
-    if (windowId) {
-      windowActive(windowId);
-      // console.log("onFocused", windowId);
-      hideWindows(windowId);
-    }
-  } catch (e) {
-
+  if (windowId) {
+    windowActive(windowId);
+    // console.log("onFocused", windowId);
+    hideWindows(windowId);
   }
 }
 function windowCreated(window) {
-  try {
-    if (!!window && !!window.id) {
-      windowActive(window.id);
-    }
-  } catch (e) {
-
+  if (!!window && !!window.id) {
+    windowActive(window.id);
   }
-  // console.log("onCreated", window.id);
 }
 function windowRemoved(windowId) {
-  try {
-    if (windowId) {
-      windowActive(windowId);
-    }
-  } catch (e) {
-
+  if (windowId) {
+    windowActive(windowId);
   }
-  // console.log("onRemoved", windowId);
 }
 
 window.displayInfo = [];
