@@ -1,48 +1,48 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'commonjs': true,
-    'es6': true,
-    'node': true
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
   },
-  'extends': [
-    'eslint:recommended',
-    'plugin:react/recommended'
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
-  'globals': {
-    'Atomics': 'readonly',
-    'SharedArrayBuffer': 'readonly'
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
   },
-  'parserOptions': {
-    'ecmaFeatures': {
-      'jsx': true,
-      'impliedStrict': true
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "impliedStrict": true
     },
-    'ecmaVersion': 2018
+    "ecmaVersion": 2018
   },
-  'plugins': [
-    'react'
+  "plugins": [
+    "react"
   ],
-  'rules': {
-    'strict': [
-      2, 
+  "rules": {
+    "strict": [
+      2,
       "never"
     ],
-    'indent': [
-      'error',
+    "indent": [
+      "error",
       2
     ],
-    'linebreak-style': [
-      'error',
-      'unix'
+    "linebreak-style": [
+      "error",
+      "unix"
     ],
-    'quotes': [
-      'error',
-      'double'
+    "quotes": [
+      "error",
+      "double"
     ],
-    'semi': [
-      'error',
-      'always'
+    "semi": [
+      "error",
+      "always"
     ]
   }
 };
