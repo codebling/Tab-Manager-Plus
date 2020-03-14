@@ -19,6 +19,10 @@
     "url": "https://github.com/stefanXO/Tab-Manager/issues"
   },
   "homepage": "https://github.com/stefanXO/Tab-Manager#readme",
+  "browserslist": [
+    "last 5 Chrome versions",
+    "last 5 Firefox versions"
+  ],
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
