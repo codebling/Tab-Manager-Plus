@@ -15,6 +15,7 @@ module.exports = {
   },
   "parserOptions": {
     "ecmaFeatures": {
+      "blockBindings": true,
       "jsx": true,
       "impliedStrict": true
     },
@@ -24,6 +25,7 @@ module.exports = {
     "react"
   ],
   "rules": {
+    "no-var": "error",
     "strict": [
       2,
       "never"
