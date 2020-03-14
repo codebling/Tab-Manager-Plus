@@ -1,5 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const TabManager = require('./TabManager.jsx');
 
 window.loaded = false;
 if (window.location.search.indexOf("?popup") > -1) {

@@ -1,4 +1,7 @@
 const React = require('react');
+const TabOptions = require('./TabOptions.jsx');
+const Session = require('./Session.jsx');
+const Window = require('./Window.jsx');
 
 class TabManager extends React.Component {
   constructor(props) {

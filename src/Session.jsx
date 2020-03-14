@@ -1,4 +1,5 @@
 const React = require('react');
+const Tab = require('./Tab.jsx');
 
 class Session extends React.Component {
   constructor(props) {

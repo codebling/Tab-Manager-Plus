@@ -1,4 +1,5 @@
 const React = require('react');
+const Tab = require('./Tab.jsx');
 
 class Window extends React.Component {
   constructor(props) {
