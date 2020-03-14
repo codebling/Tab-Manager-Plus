@@ -27,7 +27,7 @@ module.exports = {
   "rules": {
     "no-var": "error",
     "strict": [
-      2,
+      "error",
       "never"
     ],
     "indent": [
