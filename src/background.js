@@ -1,4 +1,4 @@
-"use strict";
+
 
 var browser = browser || chrome;
 
@@ -7,7 +7,7 @@ async function createWindowWithTabs(tabs, isIncognito) {
   var t = [];
   for (var i = 0; i < tabs.length; i++) {
     t.push(tabs[i].id);
-  };
+  }
   var w = await browser.windows.create({ tabId: first.id, incognito: !!isIncognito });
   await browser.tabs.update(first.id, { pinned: first.pinned });
   if (t.length > 0) {
@@ -19,7 +19,7 @@ async function createWindowWithTabs(tabs, isIncognito) {
 
 async function focusOnTabAndWindow(tab) {
   await browser.windows.update(tab.windowId, { focused: true });
-  if (!!tab.tabId) {
+  if (tab.tabId) {
     await browser.tabs.update(tab.tabId, { active: true });
     tabActiveChanged(tab);
   } else {
@@ -44,25 +44,25 @@ async function updateTabCount() {
     await browser.browserAction.setBadgeText({ text: count + "" });
     await browser.browserAction.setBadgeBackgroundColor({ color: "purple" });
     var toRemove = [];
-    if (!!window.tabsActive) {
+    if (window.tabsActive) {
       for (var i = 0; i < window.tabsActive.length; i++) {
         var t = window.tabsActive[i];
         var found = false;
         if (!!result && !!result.length) {
           for (var j = 0; j < result.length; j++) {
             if (result[j].id == t.tabId) found = true;
-          };
+          }
         }
         if (!found) toRemove.push(i);
-      };
+      }
     }
     // console.log("to remove", toRemove);
     for (var i = toRemove.length - 1; i >= 0; i--) {
       // console.log("removing", toRemove[i]);
       if (!!window.tabsActive && window.tabsActive.length > 0) {
-        if (!!window.tabsActive[toRemove[i]]) window.tabsActive.splice(toRemove[i], 1);
+        if (window.tabsActive[toRemove[i]]) window.tabsActive.splice(toRemove[i], 1);
       }
-    };
+    }
   } else {
     await browser.browserAction.setBadgeText({ text: "" });
   }
@@ -109,7 +109,7 @@ function tabActiveChanged(tab) {
       if (window.tabsActive[i].tabId == tab.tabId) {
         window.tabsActive.splice(i, 1);
       }
-    };
+    }
     window.tabsActive.push(tab);
   }
   updateTabCountDebounce();
@@ -162,7 +162,7 @@ async function setupListeners() {
     onclick: openAsOwnTab
   });
 
-  if (!!browser.browserAction.openPopup) {
+  if (browser.browserAction.openPopup) {
     browser.contextMenus.create({
       title: "📑 Open popup",
       contexts: ["browser_action"],
@@ -309,7 +309,7 @@ function debounce(func, wait, immediate) {
     timeout = setTimeout(later, wait);
     if (callNow) func.apply(context, args);
   };
-};
+}
 
 function localStorageAvailable() {
   var test = "test";
@@ -324,7 +324,7 @@ function localStorageAvailable() {
 
 function windowFocus(windowId) {
   try {
-    if (!!windowId) {
+    if (windowId) {
       windowActive(windowId);
       // console.log("onFocused", windowId);
       hideWindows(windowId);
@@ -345,7 +345,7 @@ function windowCreated(window) {
 }
 function windowRemoved(windowId) {
   try {
-    if (!!windowId) {
+    if (windowId) {
       windowActive(windowId);
     }
   } catch (e) {
@@ -410,7 +410,7 @@ async function hideWindows(windowId) {
               }
             }
           }
-        };
+        }
 
         for (var i = windows.length - 1; i >= 0; i--) {
           if (windows[i].id != windowId) {
@@ -418,7 +418,7 @@ async function hideWindows(windowId) {
               await browser.windows.update(windows[i].id, { "state": "minimized" });
             }
           }
-        };
+        }
       }.bind(null, windowId));
     }
 
@@ -434,7 +434,7 @@ function is_in_bounds(object, bounds) {
     }
   }
   return false;
-};
+}
 
 function windowActive(windowId) {
   if (windowId < 0) return;
@@ -487,8 +487,8 @@ browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       return 0;
     });
     for (var i = 0; i < windows.length; i++) {
-      if (!!windows[i].id) windowActive(windows[i].id);
-    };
+      if (windows[i].id) windowActive(windows[i].id);
+    }
   }
 })();
 
