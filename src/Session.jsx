@@ -5,7 +5,7 @@ class Session extends React.Component {
     super(props);
     //console.log(this.props.window);
     //console.log(this.props.window.name);
-    var name = this.props.window.name;
+    let name = this.props.window.name;
     this.state = {
       windowTitles: [],
       name: name,
@@ -19,15 +19,15 @@ class Session extends React.Component {
 
   }
   render() {
-    var _this = this;
-    var name = this.props.window.name;
-    var hideWindow = true;
-    var titleAdded = false;
-    var tabsperrow = this.props.layout.indexOf("blocks") > -1 ? Math.ceil(Math.sqrt(this.props.tabs.length + 2)) : this.props.layout == "vertical" ? 1 : 15;
-    var tabs = this.props.tabs.map(function (tab) {
-      var tabId = tab.id * tab.id * tab.id * 100;
-      var isHidden = !!_this.props.hiddenTabs[tabId] && _this.props.filterTabs;
-      var isSelected = !!_this.props.selection[tabId];
+    let _this = this;
+    let name = this.props.window.name;
+    let hideWindow = true;
+    let titleAdded = false;
+    let tabsperrow = this.props.layout.indexOf("blocks") > -1 ? Math.ceil(Math.sqrt(this.props.tabs.length + 2)) : this.props.layout == "vertical" ? 1 : 15;
+    let tabs = this.props.tabs.map(function (tab) {
+      let tabId = tab.id * tab.id * tab.id * 100;
+      let isHidden = !!_this.props.hiddenTabs[tabId] && _this.props.filterTabs;
+      let isSelected = !!_this.props.selection[tabId];
       tab.id = tabId;
       hideWindow &= isHidden;
       return (
@@ -81,17 +81,17 @@ class Session extends React.Component {
       if (tabsperrow < 3) {
         tabsperrow = 3;
       }
-      var children = [];
+      let children = [];
       if (!!titleAdded) {
         children.push(tabs.shift());
       }
-      for (var j = 0; j < tabs.length; j++) {
+      for (let j = 0; j < tabs.length; j++) {
         children.push(tabs[j]);
         if ((j + 1) % tabsperrow == 0 && j && this.props.layout.indexOf("blocks") > -1) {
           children.push(<div className="newliner" />);
         }
       }
-      var focused = false;
+      let focused = false;
       if (this.props.window.windowsInfo.focused || this.props.lastOpenWindow == this.props.window.windowsInfo.id) {
         focused = true;
       }
@@ -130,31 +130,31 @@ class Session extends React.Component {
     e.stopPropagation();
   }
   async windowClick(e) {
-    var _this2 = this;
+    let _this2 = this;
     e.stopPropagation();
     console.log("source window", this.props.window);
     // chrome.runtime.getBackgroundPage(function callback(tabs, backgroundPage) {
     // 	backgroundPage.createWindowWithTabs(tabs);
     // }.bind(null, this.props.window.tabs));
 
-    var customName = false;
+    let customName = false;
     if (this.props.window && this.props.window.name && this.props.window.customName) {
       customName = this.props.window.name;
     }
 
-    var whitelistWindow = ["url", "tabId", "left", "top", "width", "height", "focused", "incognito", "type", "setSelfAsOpener"];
+    let whitelistWindow = ["url", "tabId", "left", "top", "width", "height", "focused", "incognito", "type", "setSelfAsOpener"];
 
     if (navigator.userAgent.search("Firefox") > -1) {
       whitelistWindow = ["url", "tabId", "left", "top", "width", "height", "incognito", "type", "setSelfAsOpener"];
     }
 
-    var whitelistTab = ["windowId", "index", "url", "active", "selected", "pinned"];
+    let whitelistTab = ["windowId", "index", "url", "active", "selected", "pinned"];
 
     if (navigator.userAgent.search("Firefox") > -1) {
       whitelistTab = ["windowId", "index", "url", "active", "pinned"];
     }
 
-    var filteredWindow = Object.keys(this.props.window.windowsInfo)
+    let filteredWindow = Object.keys(this.props.window.windowsInfo)
       .filter(function (key) {
         return whitelistWindow.includes(key);
       })
@@ -164,16 +164,16 @@ class Session extends React.Component {
       }, {});
     console.log("filtered window", filteredWindow);
 
-    var newWindow = await browser.windows.create(filteredWindow).catch(function (error) {
+    let newWindow = await browser.windows.create(filteredWindow).catch(function (error) {
       console.error(error);
       console.log(error);
       console.log(error.message);
     });
 
-    var emptyTab = newWindow.tabs[0].id;
+    let emptyTab = newWindow.tabs[0].id;
 
-    for (var i = 0; i < this.props.window.tabs.length; i++) {
-      var newTab = Object.keys(this.props.window.tabs[i])
+    for (let i = 0; i < this.props.window.tabs.length; i++) {
+      let newTab = Object.keys(this.props.window.tabs[i])
         .filter(function (key) {
           return whitelistTab.includes(key);
         })
@@ -189,7 +189,7 @@ class Session extends React.Component {
         }
       }
       newTab.windowId = newWindow.id;
-      var tabCreated = await browser.tabs.create(newTab).catch(function (error) {
+      let tabCreated = await browser.tabs.create(newTab).catch(function (error) {
         console.error(error);
         console.log(error);
         console.log(error.message);
@@ -203,7 +203,7 @@ class Session extends React.Component {
     });
 
     if (customName) {
-      var names = localStorage["windowNames"];
+      let names = localStorage["windowNames"];
       if (!!names) {
         names = JSON.parse(names);
       } else {
@@ -238,7 +238,7 @@ class Session extends React.Component {
   }
   async close(e) {
     e.stopPropagation();
-    var value = await browser.storage.local.remove(this.props.window.id);
+    let value = await browser.storage.local.remove(this.props.window.id);
     console.log(value);
     this.props.parentUpdate();
     // browser.windows.remove(this.props.window.windowsInfo.id);

@@ -6,7 +6,7 @@ class TabOptions extends React.Component {
     this.state = {};
   }
   logo() {
-    var logo = [<img src="images/browsers.svg" style={{ maxWidth: "3rem" }} />, <h2>Tab Manager Plus {__VERSION__}</h2>];
+    let logo = [<img src="images/browsers.svg" style={{ maxWidth: "3rem" }} />, <h2>Tab Manager Plus {__VERSION__}</h2>];
 
     return (
       <div className="logo-options">
@@ -15,7 +15,7 @@ class TabOptions extends React.Component {
     );
   }
   optionsSection() {
-    var opts = [
+    let opts = [
       <div className="optionsBox">
         <h4>Tab options</h4>
         <div className="toggle-box">
@@ -374,7 +374,7 @@ class TabOptions extends React.Component {
     browser.tabs.create({ url: "chrome://extensions/shortcuts" });
   }
   licenses() {
-    var licenses = [];
+    let licenses = [];
     licenses.push(
       <div className="license">
         Tab Manager Plus is based on{" "}
@@ -413,7 +413,7 @@ class TabOptions extends React.Component {
     return <div className="licenses">{licenses}</div>;
   }
   render() {
-    var children = [];
+    let children = [];
 
     children.push(this.logo());
     children.push(this.optionsSection());

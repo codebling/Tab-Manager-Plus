@@ -3,20 +3,20 @@
 class Window extends React.Component {
   constructor(props) {
     super(props);
-    var colors = localStorage["windowColors"];
+    let colors = localStorage["windowColors"];
     if (!!colors) {
       colors = JSON.parse(colors);
     } else {
       colors = {};
     }
-    var color = colors[this.props.window.id] || "default";
-    var names = localStorage["windowNames"];
+    let color = colors[this.props.window.id] || "default";
+    let names = localStorage["windowNames"];
     if (!!names) {
       names = JSON.parse(names);
     } else {
       names = {};
     }
-    var name = names[this.props.window.id] || "";
+    let name = names[this.props.window.id] || "";
     this.state = {
       colorActive: false,
       windowTitles: [],
@@ -41,27 +41,27 @@ class Window extends React.Component {
   }
 
   render() {
-    var _this = this;
-    var colors = localStorage["windowColors"];
+    let _this = this;
+    let colors = localStorage["windowColors"];
     if (!!colors) {
       colors = JSON.parse(colors);
     } else {
       colors = {};
     }
-    var color = colors[this.props.window.id] || "default";
-    var names = localStorage["windowNames"];
+    let color = colors[this.props.window.id] || "default";
+    let names = localStorage["windowNames"];
     if (!!names) {
       names = JSON.parse(names);
     } else {
       names = {};
     }
-    var name = names[this.props.window.id] || "";
-    var hideWindow = true;
-    var titleAdded = false;
-    var tabsperrow = this.props.layout.indexOf("blocks") > -1 ? Math.ceil(Math.sqrt(this.props.tabs.length + 2)) : this.props.layout == "vertical" ? 1 : 15;
-    var tabs = this.props.tabs.map(function (tab) {
-      var isHidden = !!_this.props.hiddenTabs[tab.id] && _this.props.filterTabs;
-      var isSelected = !!_this.props.selection[tab.id];
+    let name = names[this.props.window.id] || "";
+    let hideWindow = true;
+    let titleAdded = false;
+    let tabsperrow = this.props.layout.indexOf("blocks") > -1 ? Math.ceil(Math.sqrt(this.props.tabs.length + 2)) : this.props.layout == "vertical" ? 1 : 15;
+    let tabs = this.props.tabs.map(function (tab) {
+      let isHidden = !!_this.props.hiddenTabs[tab.id] && _this.props.filterTabs;
+      let isSelected = !!_this.props.selection[tab.id];
       hideWindow &= isHidden;
       return (
         <Tab
@@ -336,11 +336,11 @@ class Window extends React.Component {
           if (this.state.windowTitles.length == 0 || this.state.tabs != tabs.length + this.props.window.id * 99) {
             this.state.windowTitles = [];
             this.state.tabs = tabs.length + this.props.window.id * 99;
-            for (var i = 0; i < tabs.length; i++) {
+            for (let i = 0; i < tabs.length; i++) {
               if (!!tabs[i].props && !!tabs[i].props.tab && !!tabs[i].props.tab.url) {
-                var url = new URL(tabs[i].props.tab.url);
-                var protocol = url.protocol;
-                var hostname = url.hostname;
+                let url = new URL(tabs[i].props.tab.url);
+                let protocol = url.protocol;
+                let hostname = url.hostname;
                 if (protocol.indexOf("chrome-extension") > -1) {
                   hostname = tabs[i].props.tab.title;
                 } else if (protocol.indexOf("about") > -1) {
@@ -349,7 +349,7 @@ class Window extends React.Component {
                   hostname = "gmail";
                 } else {
                   hostname = hostname.replace("www.", "");
-                  var regex_var = new RegExp(/(\.[^\.]{0,2})(\.[^\.]{0,2})(\.*$)|(\.[^\.]*)(\.*$)/);
+                  let regex_let = new RegExp(/(\.[^\.]{0,2})(\.[^\.]{0,2})(\.*$)|(\.[^\.]*)(\.*$)/);
                   hostname = hostname
                     .replace(regex_var, "")
                     .split(".")
@@ -388,14 +388,14 @@ class Window extends React.Component {
       if (tabsperrow < 5) {
         tabsperrow = 5;
       }
-      var children = [];
+      let children = [];
       if (!!titleAdded) {
         children.push(tabs.shift());
       }
-      var z = -1;
-      for (var j = 0; j < tabs.length; j++) {
-        var tab = tabs[j].props.tab;
-        var isHidden = !!tab && !!tab.id && !!this.props.hiddenTabs[tab.id] && this.props.filterTabs;
+      let z = -1;
+      for (let j = 0; j < tabs.length; j++) {
+        let tab = tabs[j].props.tab;
+        let isHidden = !!tab && !!tab.id && !!this.props.hiddenTabs[tab.id] && this.props.filterTabs;
         if (!isHidden) {
           z++;
           children.push(tabs[j]);
@@ -404,7 +404,7 @@ class Window extends React.Component {
           children.push(<div className="newliner" />);
         }
       }
-      var focused = false;
+      let focused = false;
       if (this.props.window.focused || this.props.lastOpenWindow == this.props.window.id) {
         focused = true;
       }
@@ -473,7 +473,7 @@ class Window extends React.Component {
   }
   uuidv4() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-      var r = (Math.random() * 16) | 0,
+      let r = (Math.random() * 16) | 0,
         v = c == "x" ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
@@ -482,10 +482,10 @@ class Window extends React.Component {
     e.stopPropagation();
 
     console.log("session name", this.state.name);
-    var sessionName = this.state.name || this.topEntries(this.state.windowTitles).join("");
+    let sessionName = this.state.name || this.topEntries(this.state.windowTitles).join("");
     console.log("session name", sessionName);
 
-    var session = {
+    let session = {
       tabs: [],
       windowsInfo: {},
       name: sessionName,
@@ -498,16 +498,16 @@ class Window extends React.Component {
       session.customName = true;
     }
 
-    var queryInfo = {};
+    let queryInfo = {};
     //queryInfo.currentWindow = true;
     queryInfo.windowId = this.props.window.id;
     console.log(queryInfo);
 
-    var tabs = await browser.tabs.query(queryInfo);
+    let tabs = await browser.tabs.query(queryInfo);
     console.log(tabs);
-    for (var tabkey in tabs) {
+    for (let tabkey in tabs) {
       if (navigator.userAgent.search("Firefox") > -1) {
-        var newTab = tabs[tabkey];
+        let newTab = tabs[tabkey];
         if (!!newTab.url && newTab.url.search("about:") > -1) {
           continue;
         }
@@ -518,11 +518,11 @@ class Window extends React.Component {
     session.windowsInfo = await browser.windows.get(this.props.window.id);
 
     console.log(session);
-    var obj = {};
+    let obj = {};
     obj[session.id] = session;
     console.log(obj);
 
-    var value = await browser.storage.local.set(obj).catch(function (err) {
+    let value = await browser.storage.local.set(obj).catch(function (err) {
       console.log(err);
       console.error(err.message);
     });
@@ -555,7 +555,7 @@ class Window extends React.Component {
   }
   changeColors(a) {
     this.setState(a);
-    var colors = localStorage["windowColors"];
+    let colors = localStorage["windowColors"];
     if (!!colors) {
       colors = JSON.parse(colors);
     } else {
@@ -571,7 +571,7 @@ class Window extends React.Component {
   }
   changeName(e) {
     // this.setState(a);
-    var names = localStorage["windowNames"];
+    let names = localStorage["windowNames"];
     if (!!names) {
       names = JSON.parse(names);
     } else {
@@ -584,15 +584,15 @@ class Window extends React.Component {
     });
   }
   topEntries(arr) {
-    var cnts = arr.reduce(function (obj, val) {
+    let cnts = arr.reduce(function (obj, val) {
       obj[val] = (obj[val] || 0) + 1;
       return obj;
     }, {});
-    var sorted = Object.keys(cnts).sort(function (a, b) {
+    let sorted = Object.keys(cnts).sort(function (a, b) {
       return cnts[b] - cnts[a];
     });
 
-    var more = 0;
+    let more = 0;
     if (sorted.length == 3) {
     } else {
       while (sorted.length > 2) {
@@ -600,7 +600,7 @@ class Window extends React.Component {
         more++;
       }
     }
-    for (var i = 0; i < sorted.length; i++) {
+    for (let i = 0; i < sorted.length; i++) {
       if (i > 0) {
         sorted[i] = ", " + sorted[i];
       }

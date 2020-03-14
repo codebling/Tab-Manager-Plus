@@ -23,18 +23,18 @@ function loadApp() {
   if (!!window.loaded) return;
   if (window.inPopup) {
     if (!!localStorage["tabHeight"]) {
-      var height = JSON.parse(localStorage["tabHeight"]);
+      let height = JSON.parse(localStorage["tabHeight"]);
       document.body.style.height = height + "px";
     }
 
     if (!!localStorage["tabWidth"]) {
-      var width = JSON.parse(localStorage["tabWidth"]);
+      let width = JSON.parse(localStorage["tabWidth"]);
       document.body.style.width = width + "px";
     }
 
-    var root = document.getElementById("root");
+    let root = document.getElementById("root");
     if (root != null) {
-      var height = document.body.style.height.split("px")[0];
+      let height = document.body.style.height.split("px")[0];
       height = parseInt(height) || 0;
       if (height < 300) {
         height = 400;

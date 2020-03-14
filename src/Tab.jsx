@@ -21,7 +21,7 @@ class Tab extends React.Component {
     this.resolveFavIconUrl();
   }
   render() {
-    var children = [];
+    let children = [];
     if (this.props.layout == "vertical") {
       children.push(
         <div key={"tab-pinned-" + this.props.tab.id} className={"tab-pinned " + (!this.props.tab.pinned ? "hidden" : "")}>
@@ -54,7 +54,7 @@ class Tab extends React.Component {
       );
     }
 
-    var tabDom = {
+    let tabDom = {
       className:
         "icon tab " +
         (this.props.selected ? "selected " : "") +
@@ -147,7 +147,7 @@ class Tab extends React.Component {
   dragOver(e) {
     e.nativeEvent.preventDefault();
     if (!this.props.drag) return;
-    var before = this.state.draggingOver;
+    let before = this.state.draggingOver;
     if (this.props.layout == "vertical") {
       this.state.draggingOver = e.nativeEvent.offsetY > ReactDOM.findDOMNode(this).clientHeight / 2 ? "bottom" : "top";
     } else {
@@ -164,7 +164,7 @@ class Tab extends React.Component {
     if (!!this.props.drop) {
       e.nativeEvent.preventDefault();
       e.stopPropagation();
-      var before = this.state.draggingOver == "top" || this.state.draggingOver == "left";
+      let before = this.state.draggingOver == "top" || this.state.draggingOver == "left";
       delete this.state.draggingOver;
       this.props.drop(this.props.tab.id, before);
     } else {
@@ -172,7 +172,7 @@ class Tab extends React.Component {
     }
   }
   async resolveFavIconUrl() {
-    var image;
+    let image;
     // firefox screenshots; needs <all_urls>
     // if(!!browser.tabs.captureTab) {
     // 	console.log("tabs captureTab");
@@ -194,8 +194,8 @@ class Tab extends React.Component {
       image = this.props.tab.favIconUrl ? "url(" + this.props.tab.favIconUrl + ")" : "";
       //}
     } else {
-      var favIcons = ["bookmarks", "chrome", "crashes", "downloads", "extensions", "flags", "history", "settings"];
-      var iconName = this.props.tab.url.slice(9).match(/^\w+/g);
+      let favIcons = ["bookmarks", "chrome", "crashes", "downloads", "extensions", "flags", "history", "settings"];
+      let iconName = this.props.tab.url.slice(9).match(/^\w+/g);
       image = !iconName || favIcons.indexOf(iconName[0]) < 0 ? "" : "url(../images/chrome/" + iconName[0] + ".png)";
     }
     this.setState({

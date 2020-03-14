@@ -1,17 +1,17 @@
 
 
-var browser = browser || chrome;
+let browser = browser || chrome;
 
 async function createWindowWithTabs(tabs, isIncognito) {
-  var first = tabs.shift();
-  var t = [];
-  for (var i = 0; i < tabs.length; i++) {
+  let first = tabs.shift();
+  let t = [];
+  for (let i = 0; i < tabs.length; i++) {
     t.push(tabs[i].id);
   }
-  var w = await browser.windows.create({ tabId: first.id, incognito: !!isIncognito });
+  let w = await browser.windows.create({ tabId: first.id, incognito: !!isIncognito });
   await browser.tabs.update(first.id, { pinned: first.pinned });
   if (t.length > 0) {
-    var tab = await browser.tabs.move(t, { windowId: w.id, index: -1 });
+    let tab = await browser.tabs.move(t, { windowId: w.id, index: -1 });
     await browser.tabs.update(tab.id, { pinned: tab.pinned });
   }
   await browser.windows.update(w.id, { focused: true });
@@ -29,27 +29,27 @@ async function focusOnTabAndWindow(tab) {
 }
 
 async function updateTabCount() {
-  var run = true;
+  let run = true;
   if (localStorageAvailable()) {
     if (typeof localStorage["badge"] === "undefined") localStorage["badge"] = "1";
     if (localStorage["badge"] == "0") run = false;
   }
 
   if (run) {
-    var result = await browser.tabs.query({});
-    var count = 0;
+    let result = await browser.tabs.query({});
+    let count = 0;
     if (!!result && !!result.length) {
       count = result.length;
     }
     await browser.browserAction.setBadgeText({ text: count + "" });
     await browser.browserAction.setBadgeBackgroundColor({ color: "purple" });
-    var toRemove = [];
+    let toRemove = [];
     if (window.tabsActive) {
-      for (var i = 0; i < window.tabsActive.length; i++) {
-        var t = window.tabsActive[i];
-        var found = false;
+      for (let i = 0; i < window.tabsActive.length; i++) {
+        let t = window.tabsActive[i];
+        let found = false;
         if (!!result && !!result.length) {
-          for (var j = 0; j < result.length; j++) {
+          for (let j = 0; j < result.length; j++) {
             if (result[j].id == t.tabId) found = true;
           }
         }
@@ -57,7 +57,7 @@ async function updateTabCount() {
       }
     }
     // console.log("to remove", toRemove);
-    for (var i = toRemove.length - 1; i >= 0; i--) {
+    for (let i = toRemove.length - 1; i >= 0; i--) {
       // console.log("removing", toRemove[i]);
       if (!!window.tabsActive && window.tabsActive.length > 0) {
         if (window.tabsActive[toRemove[i]]) window.tabsActive.splice(toRemove[i], 1);
@@ -68,7 +68,7 @@ async function updateTabCount() {
   }
 }
 
-var updateTabCountDebounce = debounce(updateTabCount, 250);
+let updateTabCountDebounce = debounce(updateTabCount, 250);
 
 function tabRemoved() {
   updateTabCountDebounce();
@@ -79,9 +79,9 @@ window.tabsActive = [];
 async function tabAdded(tab) {
   if (typeof localStorage["tabLimit"] === "undefined") localStorage["tabLimit"] = "0";
   try {
-    var tabLimit = JSON.parse(localStorage["tabLimit"]);
+    let tabLimit = JSON.parse(localStorage["tabLimit"]);
   } catch (e) {
-    var tabLimit = 0;
+    let tabLimit = 0;
   }
   if (tabLimit > 0) {
     if (tab.index >= tabLimit) {
@@ -97,7 +97,7 @@ function tabActiveChanged(tab) {
   if (!!tab && !!tab.tabId) {
     if (!window.tabsActive) window.tabsActive = [];
     if (!!window.tabsActive && window.tabsActive.length > 0) {
-      var lastActive = window.tabsActive[window.tabsActive.length - 1];
+      let lastActive = window.tabsActive[window.tabsActive.length - 1];
       if (!!lastActive && lastActive.tabId == tab.tabId && lastActive.windowId == tab.windowId) {
         return;
       }
@@ -105,7 +105,7 @@ function tabActiveChanged(tab) {
     while (window.tabsActive.length > 20) {
       window.tabsActive.shift();
     }
-    for (var i = window.tabsActive.length - 1; i >= 0; i--) {
+    for (let i = window.tabsActive.length - 1; i >= 0; i--) {
       if (window.tabsActive[i].tabId == tab.tabId) {
         window.tabsActive.splice(i, 1);
       }
@@ -120,10 +120,10 @@ async function openPopup() {
 }
 
 async function openAsOwnTab() {
-  var popup_page = browser.runtime.getURL("popup.html");
-  var tabs = await browser.tabs.query({});
-  for (var i = 0; i < tabs.length; i++) {
-    var tab = tabs[i];
+  let popup_page = browser.runtime.getURL("popup.html");
+  let tabs = await browser.tabs.query({});
+  for (let i = 0; i < tabs.length; i++) {
+    let tab = tabs[i];
     if (tab.url.indexOf("popup.html") > -1 && tab.url.indexOf(popup_page) > -1) {
       return browser.windows.update(tab.windowId, { focused: true }).then(
         function () {
@@ -137,7 +137,7 @@ async function openAsOwnTab() {
 
 async function setupPopup() {
   if (typeof localStorage["openInOwnTab"] === "undefined") localStorage["openInOwnTab"] = "0";
-  var openInOwnTab = false;
+  let openInOwnTab = false;
   try {
     openInOwnTab = !!JSON.parse(localStorage["openInOwnTab"]);
   } catch (e) {
@@ -297,14 +297,14 @@ async function setupListeners() {
 // N milliseconds. If `immediate` is passed, trigger the function on the
 // leading edge, instead of the trailing.
 function debounce(func, wait, immediate) {
-  var timeout;
+  let timeout;
   return function () {
-    var context = this, args = arguments;
-    var later = function later() {
+    let context = this, args = arguments;
+    let later = function later() {
       timeout = null;
       if (!immediate) func.apply(context, args);
     };
-    var callNow = immediate && !timeout;
+    let callNow = immediate && !timeout;
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
     if (callNow) func.apply(context, args);
@@ -312,7 +312,7 @@ function debounce(func, wait, immediate) {
 }
 
 function localStorageAvailable() {
-  var test = "test";
+  let test = "test";
   try {
     localStorage.setItem(test, test);
     localStorage.removeItem(test);
@@ -372,17 +372,17 @@ async function hideWindows(windowId) {
       return;
     }
 
-    var result = await browser.permissions.contains({ permissions: ["system.display"] });
+    let result = await browser.permissions.contains({ permissions: ["system.display"] });
     if (result) {
       // The extension has the permissions.
       chrome.system.display.getInfo(async function (windowId, displaylayouts) {
         window.displayInfo = [];
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        let _iteratorNormalCompletion = true;
+        let _didIteratorError = false;
+        let _iteratorError = undefined;
         try {
-          for (var _iterator = displaylayouts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var displaylayout = _step.value;
+          for (let _iterator = displaylayouts[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            let displaylayout = _step.value;
             window.displayInfo.push(displaylayout.bounds);
           }
         } catch (err) {
@@ -399,12 +399,12 @@ async function hideWindows(windowId) {
             }
           }
         }
-        var windows = await browser.windows.getAll({ populate: true });
-        var monitor = -1;
-        for (var i = windows.length - 1; i >= 0; i--) {
+        let windows = await browser.windows.getAll({ populate: true });
+        let monitor = -1;
+        for (let i = windows.length - 1; i >= 0; i--) {
           if (windows[i].id == windowId) {
-            for (var a in window.displayInfo) {
-              var result = is_in_bounds(windows[i], window.displayInfo[a]);
+            for (let a in window.displayInfo) {
+              let result = is_in_bounds(windows[i], window.displayInfo[a]);
               if (result) {
                 monitor = a;
               }
@@ -412,7 +412,7 @@ async function hideWindows(windowId) {
           }
         }
 
-        for (var i = windows.length - 1; i >= 0; i--) {
+        for (let i = windows.length - 1; i >= 0; i--) {
           if (windows[i].id != windowId) {
             if (is_in_bounds(windows[i], window.displayInfo[monitor])) {
               await browser.windows.update(windows[i].id, { "state": "minimized" });
@@ -427,7 +427,7 @@ async function hideWindows(windowId) {
 }
 
 function is_in_bounds(object, bounds) {
-  var C = object, B = bounds;
+  let C = object, B = bounds;
   if (C.left >= B.left && C.left <= B.left + B.width) {
     if (C.top >= B.top && C.top <= B.top + B.height) {
       return true;
@@ -438,7 +438,7 @@ function is_in_bounds(object, bounds) {
 
 function windowActive(windowId) {
   if (windowId < 0) return;
-  var windows = JSON.parse(localStorage["windowAge"]);
+  let windows = JSON.parse(localStorage["windowAge"]);
   if (windows instanceof Array) {
 
   } else {
@@ -449,8 +449,8 @@ function windowActive(windowId) {
   localStorage["windowAge"] = JSON.stringify(windows);
 
   // browser.windows.getLastFocused({ populate: true }, function (w) {
-  // 	for (var i = 0; i < w.tabs.length; i++) {
-  // 		var tab = w.tabs[i];
+  // 	for (let i = 0; i < w.tabs.length; i++) {
+  // 		let tab = w.tabs[i];
   // 		if (tab.active == true) {
   // 			// console.log("get last focused", tab.id);
   // 			// tabActiveChanged({
@@ -478,7 +478,7 @@ browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 (async function () {
-  var windows = await browser.windows.getAll({ populate: true });
+  let windows = await browser.windows.getAll({ populate: true });
   localStorage["windowAge"] = JSON.stringify([]);
   if (!!windows && windows.length > 0) {
     windows.sort(function (a, b) {
@@ -486,7 +486,7 @@ browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       if (a.id > b.id) return -1;
       return 0;
     });
-    for (var i = 0; i < windows.length; i++) {
+    for (let i = 0; i < windows.length; i++) {
       if (windows[i].id) windowActive(windows[i].id);
     }
   }
