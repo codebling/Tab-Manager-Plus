@@ -138,7 +138,6 @@ async function setupPopup() {
   } catch (e) {
     openInOwnTab = false;
   }
-  console.log(openInOwnTab);
   if (openInOwnTab) {
     await browser.browserAction.setPopup({ popup: "" });
     await browser.browserAction.onClicked.addListener(openAsOwnTab);

@@ -129,7 +129,6 @@ class Session extends React.Component {
   async windowClick(e) {
     let _this2 = this;
     e.stopPropagation();
-    console.log("source window", this.props.window);
 
     let customName = false;
     if (this.props.window && this.props.window.name && this.props.window.customName) {
@@ -156,7 +155,6 @@ class Session extends React.Component {
         obj[key] = _this2.props.window.windowsInfo[key];
         return obj;
       }, {});
-    console.log("filtered window", filteredWindow);
 
     let newWindow = await browser.windows.create(filteredWindow).catch(function (error) {
       console.error(error);
@@ -175,10 +173,8 @@ class Session extends React.Component {
           obj[key] = _this2.props.window.tabs[i][key];
           return obj;
         }, {});
-      console.log("source tab", newTab);
       if (navigator.userAgent.search("Firefox") > -1) {
         if (!!newTab.url && newTab.url.search("about:") > -1) {
-          console.log("filtered by about: url", newTab.url);
           newTab.url = "";
         }
       }
@@ -220,7 +216,6 @@ class Session extends React.Component {
   async close(e) {
     e.stopPropagation();
     let value = await browser.storage.local.remove(this.props.window.id);
-    console.log(value);
     this.props.parentUpdate();
   }
   maximize(e) {

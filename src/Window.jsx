@@ -481,9 +481,7 @@ class Window extends React.Component {
   async save(e) {
     e.stopPropagation();
 
-    console.log("session name", this.state.name);
     let sessionName = this.state.name || this.topEntries(this.state.windowTitles).join("");
-    console.log("session name", sessionName);
 
     let session = {
       tabs: [],
@@ -500,10 +498,8 @@ class Window extends React.Component {
 
     let queryInfo = {};
     queryInfo.windowId = this.props.window.id;
-    console.log(queryInfo);
 
     let tabs = await browser.tabs.query(queryInfo);
-    console.log(tabs);
     for (let tabkey in tabs) {
       if (navigator.userAgent.search("Firefox") > -1) {
         let newTab = tabs[tabkey];
@@ -513,20 +509,16 @@ class Window extends React.Component {
       }
       session.tabs.push(tabs[tabkey]);
     }
-    console.log(session.tabs);
     session.windowsInfo = await browser.windows.get(this.props.window.id);
 
-    console.log(session);
     let obj = {};
     obj[session.id] = session;
-    console.log(obj);
 
     let value = await browser.storage.local.set(obj).catch(function (err) {
       console.log(err);
       console.error(err.message);
     });
     this.props.parentUpdate();
-    console.log("Value is set to " + value);
 
     setTimeout(function () {
       this.props.scrollTo("session", session.id);
