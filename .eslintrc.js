@@ -15,7 +15,8 @@ module.exports = {
   },
   'parserOptions': {
     'ecmaFeatures': {
-      'jsx': true
+      'jsx': true,
+      'impliedStrict': true
     },
     'ecmaVersion': 2018
   },
@@ -23,6 +24,10 @@ module.exports = {
     'react'
   ],
   'rules': {
+    'strict': [
+      2, 
+      "never"
+    ],
     'indent': [
       'error',
       2
