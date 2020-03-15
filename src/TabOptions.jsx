@@ -1,9 +1,25 @@
 const React = require('react');
+const UAParser = require('ua-parser-js');
+
+const isCurrentBrowserChrome = () => 
+  new UAParser(navigator.userAgent).getBrowser().name
+;
 
 class TabOptions extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    if (navigator) {
+      const isChrome = isCurrentBrowserChrome();
+      this.state = {isChrome};
+    } else {
+      this.state = {};
+    }
+  }
+  componentDidMount() {
+    if (!'isChrome' in this.state) {
+      const isChrome = isCurrentBrowserChrome();
+      this.setState({isChrome});
+    }
   }
   logo() {
     let logo = [<img src="images/browsers.svg" style={{ maxWidth: "3rem" }} />, <h2>Tab Manager Plus {__VERSION__}</h2>];
@@ -269,28 +285,30 @@ class TabOptions extends React.Component {
       </div>,
       <div className="optionsBox">
         <h4>Window settings</h4>
-        <div className="toggle-box">
-          <div className="toggle">
-            <input
-              type="checkbox"
-              onMouseEnter={this.props.hideText}
-              onChange={this.props.toggleHide}
-              checked={this.props.hideWindows}
-              id="auto_hide"
-              name="auto_hide"
-            />
-            <label onMouseEnter={this.props.hideText} htmlFor="auto_hide" style={{ whiteSpace: "pre", lineHeight: "2rem" }} />
+        { this.state.isChrome ? (
+          <div className="toggle-box">
+            <div className="toggle">
+              <input
+                type="checkbox"
+                onMouseEnter={this.props.hideText}
+                onChange={this.props.toggleHide}
+                checked={this.props.hideWindows}
+                id="auto_hide"
+                name="auto_hide"
+              />
+              <label onMouseEnter={this.props.hideText} htmlFor="auto_hide" style={{ whiteSpace: "pre", lineHeight: "2rem" }} />
+            </div>
+            <label className="textlabel" htmlFor="auto_hide" style={{ whiteSpace: "pre", lineHeight: "2rem" }}>
+              Minimize inactive windows
+            </label>
+            <div className="option-description">
+              With this option enabled, you will only have 1 open window per monitor at all times. When you switch to another window, the other windows will be
+              minimized to the tray automatically.
+              <br />
+              <i>By default: disabled</i>
+            </div>
           </div>
-          <label className="textlabel" htmlFor="auto_hide" style={{ whiteSpace: "pre", lineHeight: "2rem" }}>
-            Minimize inactive windows
-          </label>
-          <div className="option-description">
-            With this option enabled, you will only have 1 open window per monitor at all times. When you switch to another window, the other windows will be
-            minimized to the tray automatically.
-            <br />
-            <i>By default: disabled</i>
-          </div>
-        </div>
+        ) : "" }
         <div className="toggle-box">
           <div className="toggle">
             <input
@@ -318,11 +336,14 @@ class TabOptions extends React.Component {
         <div className="toggle-box">
           <div className="toggle-box">
             <a href="#" onClick={this.openIncognitoOptions}>
-              Allow in Incognito
+              Allow in { this.state.isChrome ? "Incognito" : "Private Windows" }
             </a>
           </div>
           <div className="option-description">
-            If you also want to see your incognito tabs in the Tab Manager overview, then enable incognito access for this extension.
+            { this.state.isChrome 
+              ? "If you also want to see your incognito tabs in the Tab Manager overview, then enable incognito access for this extension."
+              : "If you also want to see your private tabs in the Tab Manager overview, then enable private windows access for this extension."
+            }
           </div>
         </div>
       </div>,
@@ -331,18 +352,26 @@ class TabOptions extends React.Component {
         <div className="toggle-box">
           <div className="toggle-box">
             <a href="#" onClick={this.openIncognitoOptions}>
-              Allow in Incognito
+              Allow in { this.state.isChrome ? "Incognito" : "Private Windows" }
             </a>
           </div>
           <div className="option-description">
-            If you also want to see your incognito tabs in the Tab Manager overview, then enable incognito access for this extension.
+            { this.state.isChrome 
+                ? "If you also want to see your incognito tabs in the Tab Manager overview, then enable incognito access for this extension."
+                : "If you also want to see your private tabs in the Tab Manager overview, then enable private windows access for this extension."
+              }
           </div>
         </div>
         <div className="toggle-box">
           <a href="#" onClick={this.openShortcuts}>
             Change shortcut key
           </a>
-          <div className="option-description">If you want to disable or change the shortcut key with which to open Tab Manager Plus, you can do so here.</div>
+          <div className="option-description">
+            { this.setState.isChrome 
+                ? "If you want to disable or change the shortcut key with which to open Tab Manager Plus, you can do so here."
+                : "If you want to disable or change the shortcut key with which to open Tab Manager Plus, you can do so in the add-ons settings. Click on the settings cog on the next page, and then 'Manage Extension Shortcuts'."
+              }
+          </div>
         </div>
       </div>,
       <div className="optionsBox">
@@ -366,12 +395,20 @@ class TabOptions extends React.Component {
     return <div className="toggle-options">{opts}</div>;
   }
   openIncognitoOptions() {
-    browser.tabs.create({
-      url: "chrome://extensions/?id=cnkdjjdmfiffagllbiiilooaoofcoeff"
-    });
+    if (this.state.isChrome) {
+      browser.tabs.create({
+        url: "chrome://extensions/?id=cnkdjjdmfiffagllbiiilooaoofcoeff"
+      });
+    } else {
+      browser.runtime.openOptionsPage();
+    }
   }
   openShortcuts() {
-    browser.tabs.create({ url: "chrome://extensions/shortcuts" });
+    if (this.state.isChrome) {
+      browser.tabs.create({ url: "chrome://extensions/shortcuts" });
+    } else {
+      browser.runtime.openOptionsPage();
+    }
   }
   licenses() {
     let licenses = [];
