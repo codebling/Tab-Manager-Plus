@@ -351,9 +351,9 @@ class Window extends React.Component {
                   hostname = "gmail";
                 } else {
                   hostname = hostname.replace("www.", "");
-                  let regex_let = new RegExp(/(\.[^\.]{0,2})(\.[^\.]{0,2})(\.*$)|(\.[^\.]*)(\.*$)/);
+                  let hostnameRegex = new RegExp(/(\.[^\.]{0,2})(\.[^\.]{0,2})(\.*$)|(\.[^\.]*)(\.*$)/);
                   hostname = hostname
-                    .replace(regex_var, "")
+                    .replace(hostnameRegex, "")
                     .split(".")
                     .pop();
                 }
