@@ -1,4 +1,5 @@
 const React = require('react');
+const browser = require('webextension-polyfill');
 const TabOptions = require('./TabOptions.jsx');
 const Session = require('./Session.jsx');
 const Window = require('./Window.jsx');

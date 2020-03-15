@@ -40,6 +40,7 @@
     "normalize.css": "^8.0.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
-    "ua-parser-js": "^0.7.21"
+    "ua-parser-js": "^0.7.21",
+    "webextension-polyfill": "^0.6.0"
   }
 }

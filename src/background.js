@@ -1,3 +1,5 @@
+const browser = require('webextension-polyfill');
+
 async function createWindowWithTabs(tabs, isIncognito) {
   let first = tabs.shift();
   let t = [];

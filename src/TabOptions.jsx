@@ -1,5 +1,6 @@
 const React = require('react');
 const UAParser = require('ua-parser-js');
+const browser = require('webextension-polyfill');
 
 const isCurrentBrowserChrome = () => 
   new UAParser(navigator.userAgent).getBrowser().name

@@ -1,4 +1,5 @@
 const React = require('react');
+const browser = require('webextension-polyfill');
 const Tab = require('./Tab.jsx');
 
 class Session extends React.Component {
